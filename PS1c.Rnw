@@ -1,0 +1,66 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\pagestyle{empty}
+
+\begin{center}
+{\Large \textbf{POLI 5003: Problem Set \# 1, Team C}}
+\end{center}
+
+In July 2000, the \emph{Partido Acción Nacional} (PAN) beat the \emph{Partido Revolucionario Institucional} (PRI) in Mexico's presidential elections; it marked the first time in more than seventy years that the PRI had lost the presidency.  The dataset accompanying this assignment (\texttt{mex2000.dta}) is drawn from a survey conducted during that electoral campaign.  You will use it to examine the predictors of Mexicans' attitudes towards the PAN and the PRI at that critical time in the country's history. 
+
+<<label=Setup>>=
+# Setup
+require(foreign)
+mex <- read.dta("mex2000.dta")
+var.labels <- attr(mex,"var.labels")
+data.key <- data.frame(var.name=names(mex),var.labels)
+data.key
+@
+
+\begin{enumerate}
+\item Examine the variable \texttt{prefPAN}, which records how much more survey respondents' liked the PAN than the PRI (negative values indicate that they liked the PRI \emph{better} than the PAN).  What is the range of this variable?  What is its mode, median, and mean?\\
+
+% In a Sweave document R code is placed in chunks delineated by  <<>>= and @.  Options go between the angled brackets.  Type all of the code needed to get your answer in the chunk below, then add your textual answer after the @.  Note that you can add R output to your text using the command \Sexpr{}
+
+
+<<label=Answer1>>=
+summary(mex$prefPAN)
+table(mex$prefPAN)
+@
+This variable has values from -10 (minimum) to 10 (maximum). The variable’s range
+is 20. The mean is 0.3132. The median is 0.0000. The mode is 0.
+
+\item During its long rule, the PRI worked to present itself as the party of all Mexicans and was therefore something of an ideological chameleon.  The PAN, for its part, is an unabashedly right-wing party.  Nevertheless, we might hypothesize that people who leaned more to the right would be less likely to prefer the PRI to the PAN (Americanists may recall V.O. Key's writings about the one-party South).  Is this hypothesis supported by a simple regression of \texttt{prefPAN}?  How do you know?  Describe the estimated effect of ideology on preferences for the PAN over the ruling party.  \\
+
+<<label=Answer2>>=
+Q2<-lm(mex$prefPAN ~ mex$rightide)
+summary(Q2)
+@
+Yes, this hypothesis is supported. I regressed the variable indicating individual pref-
+erences between PAN and PRI on the variable indicating how ”right-leaning” an indi-
+vidual is. The negative coefficient shows that as an individual is further to the right
+(rightide increases) support for the PAN goes down. In addition, the effect is highly
+significant at the p<.001 level. The estimated effects of ideology on preferences for the
+PAN show that for a 1-unit increase in ideology (as measured in the data) there will
+be a corresponding .26 drop in preferences for the PAN.
+
+
+\item Suppose we hypothesize that respondents' preferences for the PAN over the PRI were also a function of their assessments of how well the PRI had governed lately as well as their personal characteristics.  Is our ideology hypothesis still supported when these factors are taken into account?  \\
+
+<<label=Answer3>>=
+
+@
+
+
+\item Based on this model, which variable had the strongest estimated effect on respondents' preferences for the PRI over its opponents?  \\
+
+<<label=Answer4>>=
+
+@
+
+\end{enumerate}
+\end{document}
