@@ -52,9 +52,14 @@ be a corresponding .26 drop in preferences for the PAN.
 \item Suppose we hypothesize that respondents' preferences for the PAN over the PRI were also a function of their assessments of how well the PRI had governed lately as well as their personal characteristics.  Is our ideology hypothesis still supported when these factors are taken into account?  \\
 
 <<label=Answer3>>=
-
+Q3<-lm(mex$prefPAN ~ mex$rightide + mex$PRIfeel + mex$female + mex$ses + mex$churchatt)
+summary(Q3)
 @
-
+No, the hypothesis is not still supported. The variable measuring ideology is no longer
+significant. However, other explanatory variables are significant. The measure PRIfeel,
+measuring feelings toward the PRI, is now significant at the p<.001 level. Personal
+characteristics such as gender, socioeconomic status, and church attendance are also
+significant predictors of preferences of the PAN.
 
 \item Based on this model, which variable had the strongest estimated effect on respondents' preferences for the PRI over its opponents?  \\
 
