@@ -52,33 +52,24 @@ be a corresponding .26 drop in preferences for the PAN.
 \item Suppose we hypothesize that respondents' preferences for the PAN over the PRI were also a function of their assessments of how well the PRI had governed lately as well as their personal characteristics.  Is our ideology hypothesis still supported when these factors are taken into account?  \\
 
 <<label=Answer3>>=
-Q3<-lm(mex$prefPAN ~ mex$PRIfeel + mex$rightide + mex$female + mex$ses + mex$churchatt)
+Q3<-lm(mex$prefPAN ~ mex$PRIfeel + mex$rightide + mex$econpers +
+         mex$econnat + mex$corrupt + mex$crime + mex$female + 
+         mex$ses + mex$churchatt)
 summary(Q3)
 @
-No, the hypothesis is not still supported. The variable measuring ideology is no longer
+No, the hypothesis is not supported. The variable measuring ideology is no longer
 significant. However, other explanatory variables are significant. The measure PRIfeel,
-measuring feelings toward the PRI, is now significant at the p<.001 level. Personal
-characteristics such as gender, socioeconomic status, and church attendance are also
-significant predictors of preferences of the PAN.
+measuring feelings toward the PRI, is now significant at the p<.001 level. Also, as the economic voting predicts, individuals' evaluation on their personal economic situation has a statistically significant effect on their preference for the PAN over the PRI. As ones feel they have been better off economically, they tend to support the incumbent party, the PRI. However, their evaluation on the national economy does not have a significant effect. Personal characteristics such as gender, socioeconomic status, and church attendance are also significant predictors of preferences of the PAN.
 
 \item Based on this model, which variable had the strongest estimated effect on respondents' preferences for the PRI over its opponents?  \\
 
 <<label=Answer4>>=
-mex.keep<- mex
-mex.keep$PANfeel <- NULL
-mex.keep$PRDfeel<- NULL
-mex.keep$prefPAN<- NULL
-mex.keep$prefPRI<- NULL
-mex.keep$econpers<- NULL
-mex.keep$econnat<- NULL
-mex.keep$corrupt<- NULL
-mex.keep$crime<- NULL
+mex.range <- apply(mex[,c(1,6:13)], 2,function(x) max(x) - min(x))
+mex.range
 
-mex.range <- apply(mex[,c(1,6,11:13)], 2,function(x) max(x) - min(x))
-> mex.range
-
-
+mex.effect <- mex.range*Q3$coef[2:10]
+mex.effect
 @
-
+According to the results, PRIfeel has the strongest effect on individuals' preferences for the PAN. The difference of the effects that PRIfeel has on prefPAN at its minimum and maximum values is about 8.9. An individual who feels the PRI is "very good," coded as "10" is likely not to prefer the PAN by 8.9 than one who feels the PRI is "very bad," coded as "0" other things being constant.  
 \end{enumerate}
 \end{document}
